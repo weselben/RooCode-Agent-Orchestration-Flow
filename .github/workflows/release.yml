@@ -1,0 +1,61 @@
+name: Auto Version & Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "agents/**"
+
+permissions:
+  contents: write
+
+jobs:
+  tag-and-release:
+    runs-on: ubuntu-latest
+    outputs:
+      new_tag: ${{ steps.semantic.outputs.new_tag }}
+      created: ${{ steps.semantic.outputs.new_tag != steps.semantic.outputs.previous_tag }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute next semantic version
+        id: semantic
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: patch
+          release_branches: main
+          tag_prefix: v
+
+      - name: Create GitHub Release
+        if: steps.semantic.outputs.new_tag != steps.semantic.outputs.previous_tag
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.semantic.outputs.new_tag }}
+          name: Release ${{ steps.semantic.outputs.new_tag }}
+          generate_release_notes: true
+          body: |
+            ## 📦 Mode Export Files
+
+            Download the latest agent orchestration mode configurations below.
+
+            | File | Description |
+            |------|-------------|
+            | `orchestrator-export.yaml` | Strategic planning & task bounding |
+            | `subtask-orchestrator-export.yaml` | Atomic subtask decomposition |
+            | `architect-export.yaml` | Technical design & planning |
+            | `ask-export.yaml` | Research & intelligence gathering |
+            | `git-export.yaml` | Conventional commits & version control |
+          files: |
+            agents/orchestrator-export.yaml
+            agents/subtask-orchestrator-export.yaml
+            agents/architect-export.yaml
+            agents/ask-export.yaml
+            agents/git-export.yaml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
