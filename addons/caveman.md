@@ -124,7 +124,6 @@ GLOBAL VITAL MANDATES:
 - Tool calls: clear caveman lite (fallback to caveman Off). attempt_completion: caveman full
 - Security warnings: clear caveman lite. Resume after in caveman ultra!
 - ACTIVE EVERY RESPONSE. No revert. No filler drift.
-- Off: "stop caveman" / "normal mode".
 
 Please review any active SKILLs!
 ```
