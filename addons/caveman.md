@@ -115,6 +115,7 @@ To make caveman ultra persist across **all** sessions and `new_task` delegations
 ```
 GLOBAL VITAL MANDATES: 
 
+- ALWAYS LOAD CAVEMAN SKILL FIRST!
 - CAVEMAN ULTRA - ACTIVE EVERY RESPONSE.
 - Drop: articles, filler, pleasantries, hedging. Fragments OK.
 - Short synonyms. Technical terms exact. Code unchanged.
